@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Library</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/event_styles.css">
+</head>
+<body>
+
+<div class="container">
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">Библиотека</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Меню
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a th:href="@{/events/new}" class="dropdown-item" th:if="${roles.contains('ADMIN')}">Добавить новое мероприятие</a>
+                        <a th:href="@{/bookpage}" class="dropdown-item">Перейти к каталогу книг</a>
+                        <a th:href="@{/orders}" class="dropdown-item">Перейти к заказам</a>
+                        <a th:href="@{/userlist}" class="dropdown-item" th:if="${roles.contains('ADMIN')}">Перейти к списку пользователей</a>
+                        <a th:href="@{/userpage/{username}(username=${user.username})}" class="dropdown-item">Перейти к данным аккаунта</a>
+                        <a th:href="@{/login}" class="dropdown-item">Выйти</a>
+                    </div>
+                </li>
+            </ul>
+            <a th:href="@{/author}" class="btn btn-outline-primary ml-auto">Об авторе</a>
+        </div>
+    </nav>
+
+    <h1 class="mt-4">Список мероприятий</h1>
+
+    <!-- Search Form -->
+    <form action="#" th:action="@{/events/search}" method="get" class="form-inline my-3">
+        <select name="place" class="form-control mr-2">
+            <option value="" disabled selected>Выберите аудиторию...</option>
+            <option th:each="i : ${#numbers.sequence(100, 150)}" th:value="'Аудитория ' + ${i}" th:text="'Аудитория ' + ${i}"></option>
+        </select>
+        <input type="date" id="ddate" name="ddate" th:value="${ddate}" class="form-control mr-2"/>
+        <button type="submit" class="btn btn-primary btn-sm">Поиск</button>
+        <button type="reset" onclick="window.location.href='/events/search'; return false;" class="btn btn-secondary btn-sm ml-2">Сброс</button>
+    </form>
+
+    <hr>
+
+    <div class="row">
+        <div class="col-md-4" th:each="event : ${listEvents}">
+            <div class="card mb-4">
+                <!-- Image handling -->
+                <div class="card-img-top">
+                    <img th:src="${event.imageUrl}" alt="Event Image" class="event-image">
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title" th:text="${event.name}">Event Name</h5>
+                    <p>ID: <span th:text="${event.id}"></span></p>
+                    <p>Тип мероприятия: <span th:text="${event.type}"></span></p>
+                    <p>Место проведения: <span th:text="${event.place}"></span></p>
+                    <p>Время проведения: <span th:text="${event.ddate}"></span></p>
+                    <a th:href="@{'/events/edit/'+${event.id}}" class="btn btn-info" th:if="${roles.contains('ADMIN')}">Редактировать</a>
+                    <a th:href="@{'/events/delete/'+${event.id}}" class="btn btn-danger" th:if="${roles.contains('ADMIN')}">Удалить</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- Include Bootstrap JS and dependencies -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<script>
+    // Установка текущей даты по умолчанию в поле ввода даты
+    window.onload = function() {
+        const today = new Date().toISOString().split('T')[0];
+        document.getElementById('ddate').value = today;
+    };
+</script>
+
+</body>
+</html>

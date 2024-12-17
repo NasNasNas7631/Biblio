@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Данные аккаунта</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/styles.css">
+    <style>
+        .error-message {
+            color: red;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+<div class="container mt-4">
+    <h2>Данные аккаунта</h2>
+    <form th:action="@{/userpage/save}" th:object="${user}" method="post" onsubmit="return validateForm()">
+        <input type="hidden" th:field="*{id}" />
+        <table class="table table-bordered">
+            <tbody>
+            <tr>
+                <td>Никнейм:</td>
+                <td><input type="text" th:field="*{username}" class="form-control" readonly></td>
+            </tr>
+            <tr>
+                <td>Пароль:</td>
+                <td><input type="text" th:field="*{password}" class="form-control" readonly></td>
+            </tr>
+            <tr>
+                <td>ФИО:</td>
+                <td><input type="text" th:field="*{firstName}" class="form-control" required></td>
+            </tr>
+            <tr>
+                <td>Номер телефона:</td>
+                <td><input type="text" th:field="*{phone}" class="form-control" required></td>
+            </tr>
+            <tr>
+                <td>Дата регистрации:</td>
+                <td><input type="text" th:field="*{ddate}" class="form-control" readonly></td>
+            </tr>
+            </tbody>
+        </table>
+
+        <!-- Submit Button -->
+        <button type="submit" class="btn btn-primary">Отправить</button>
+
+        <!-- Back Button -->
+        <a th:href="@{/}" class="btn btn-secondary">Назад к списку мероприятий</a>
+
+    </form>
+
+</div>
+
+<!-- Bootstrap JS and dependencies -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<script>
+    // Функция валидации формы
+    function validateForm() {
+        const requiredFields = ['username', 'password', 'firstName', 'passport', 'phone'];
+        let isValid = true;
+
+        requiredFields.forEach(field => {
+            const input = document.querySelector(`[th\\:field='*{${field}}']`);
+            if (!input.value.trim()) {
+                alert(`Поле "${field}" обязательно для заполнения.`);
+                isValid = false;
+            }
+        });
+
+        return isValid; // Возвращаем результат валидации
+    }
+</script>
+
+</body>
+</html>

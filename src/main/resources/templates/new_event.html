@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Добавить мероприятие</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/styles.css">
+    <style>
+        .error-message {
+            color: red;
+            font-size: 0.9em;
+        }
+        .hidden {
+            display: none;
+        }
+        .used-auditorium {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+<div class="container mt-4">
+    <h2>Добавить мероприятие</h2>
+    <form action="#" th:action="@{/events/save}" th:object="${event}" method="post" onsubmit="return validateForm()">
+        <table class="table table-bordered">
+            <tbody>
+            <tr class="hidden">
+                <td>ID мероприятия:</td>
+                <td><input type="text" th:field="*{id}" class="form-control" required></td>
+            </tr>
+            <tr>
+                <td>Название:</td>
+                <td><input type="text" th:field="*{name}" class="form-control" required></td>
+            </tr>
+            <tr>
+                <td>Тип мероприятия:</td>
+                <td><input type="text" th:field="*{type}" class="form-control" required></td>
+            </tr>
+            <tr>
+                <td>Место:</td>
+                <td>
+                    <select th:field="*{place}" class="form-control" required>
+                        <option th:each="i : ${#numbers.sequence(100, 150)}"
+                                th:value="'Аудитория ' + ${i}"
+                                th:text="'Аудитория ' + ${i}"
+                                th:classappend="${#lists.contains(usedAuditoriums, 'Аудитория ' + i)} ? 'used-auditorium' : ''">
+                        </option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>Время:</td>
+                <td><input type="date" th:field="*{ddate}" class="form-control" required></td>
+            </tr>
+            <tr>
+                <td>Ссылка на картинку:</td>
+                <td><input type="text" th:field="*{imageUrl}" class="form-control"></td>
+            </tr>
+            </tbody>
+        </table>
+
+        <!-- Submit Button -->
+        <button type="submit" class="btn btn-primary">Сохранить</button>
+
+        <!-- Back Button -->
+        <a href="http://localhost:8080" class="btn btn-secondary">Вернуться</a>
+
+    </form>
+
+</div>
+
+<!-- Bootstrap JS and dependencies -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<script>
+    // Функция валидации формы
+    function validateForm() {
+        const requiredFields = ['name', 'type', 'place', 'ddate'];
+        let isValid = true;
+
+        requiredFields.forEach(field => {
+            const input = document.querySelector(`[th\\:field='*{${field}}']`);
+            if (!input.value.trim()) {
+                alert(`Поле "${field}" обязательно для заполнения.`);
+                isValid = false;
+            }
+        });
+
+        return isValid; // Возвращаем результат валидации
+    }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,66 @@
+body {
+    background-color: #f8f9fa;
+}
+
+.container {
+    margin-top: 20px;
+}
+
+h1 {
+    font-weight: bold;
+    color: #343a40;
+}
+
+.form-inline {
+    background-color: #e9ecef;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.form-control, .btn {
+    border-radius: 8px;
+}
+
+.table {
+    margin-top: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.table th, .table td {
+    vertical-align: middle;
+}
+
+.table th {
+    background-color: #343a40;
+    color: #fff;
+}
+
+.table td {
+    background-color: #fff;
+}
+
+.btn-success {
+    margin-top: 20px;
+}
+
+.btn-primary, .btn-secondary, .btn-info, .btn-danger {
+    margin-right: 5px;
+}
+
+.btn-primary:hover, .btn-secondary:hover, .btn-info:hover, .btn-danger:hover {
+    opacity: 0.8;
+}
+
+.order-button {
+    background-color: #007bff;
+    border-color: #007bff;
+    color: #fff;
+}
+
+.order-button:hover {
+    background-color: #0056b3;
+    border-color: #0056b3;
+}

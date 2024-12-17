@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Изменить книгу</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/styles.css">
+    <style>
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+<div class="container mt-4">
+    <h2>Изменить книгу</h2>
+    <form action="#" th:action="@{/books/save}" th:object="${book}" method="post" onsubmit="return validateForm()">
+        <table class="table table-bordered">
+            <tbody>
+            <tr class="hidden">
+                <td>ID книги:</td>
+                <td><input type="text" th:field="*{id}" class="form-control" readonly></td>
+            </tr>
+            <tr>
+                <td>Название:</td>
+                <td><input type="text" th:field="*{name}" class="form-control" required></td>
+            </tr>
+            <tr>
+                <td>Автор:</td>
+                <td><input type="text" th:field="*{author}" class="form-control" required></td>
+            </tr>
+            <tr>
+                <td>Издательство:</td>
+                <td><input type="text" th:field="*{publisher}" class="form-control" required></td>
+            </tr>
+            <tr>
+                <td>Год издания:</td>
+                <td><input type="number" th:field="*{year}" class="form-control" required></td>
+            </tr>
+            <tr>
+                <td>Количество страниц в книге:</td>
+                <td><input type="number" th:field="*{count_pg}" class="form-control" required></td>
+            </tr>
+            <tr>
+                <td>Количество экземпляров:</td>
+                <td><input type="number" th:field="*{count_mpg}" class="form-control" required></td>
+            </tr>
+            <tr>
+                <td>ISBN:</td>
+                <td><input type="text" th:field="*{ISBN}" class="form-control"></td>
+            </tr>
+            <tr>
+                <td>ББК:</td>
+                <td><input type="text" th:field="*{BBK}" class="form-control"></td>
+            </tr>
+            </tbody>
+        </table>
+
+        <!-- Submit Button -->
+        <button type="submit" class="btn btn-primary">Отправить</button>
+
+        <!-- Back Button -->
+        <a th:href="@{/bookpage}" class="btn btn-secondary">Назад к списку книг</a>
+
+    </form>
+
+</div>
+
+<!-- Bootstrap JS and dependencies -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<script>
+    // Функция валидации формы
+    function validateForm() {
+        const requiredFields = ['name', 'author', 'publisher', 'year', 'count_pg', 'count_mpg'];
+
+        for (let field of requiredFields) {
+            const input = document.querySelector(`[th\\:field='*{${field}}']`);
+            if (!input.value) {
+                alert(`Поле ${field} обязательно для заполнения`);
+                return false;
+            }
+        }
+
+        return true; // Все поля заполнены
+    }
+</script>
+
+</body>
+</html>

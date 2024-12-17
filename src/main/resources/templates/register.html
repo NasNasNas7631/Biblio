@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Register</title>
+    <link rel="stylesheet" href="/css/register_styles.css">
+</head>
+<body>
+
+<div class="register-container">
+    <h1>Регистрация</h1>
+    <form id="registerForm" th:action="@{/register}" th:object="${user}" method="post">
+        <div class="form-group">
+            <label for="username">Имя пользователя:</label>
+            <input type="text" id="username" th:field="*{username}" />
+            <div th:if="${#fields.hasErrors('username')}" th:errors="*{username}" class="error-message"></div>
+        </div>
+
+        <div class="form-group">
+            <label for="password">Пароль:</label>
+            <div class="password-wrapper">
+                <input type="password" id="password" th:field="*{password}" />
+                <span class="toggle-password" onclick="togglePassword()">👁️</span>
+                <div id="password-strength" class="password-strength"></div>
+                <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="error-message"></div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="firstName">ФИО:</label>
+            <input type="text" id="firstName" th:field="*{firstName}" />
+        </div>
+
+        <div class="form-group">
+            <label for="phone">Телефон:</label>
+            <input type="text" id="phone" th:field="*{phone}" placeholder="8(ххх)ххх-хх-хх" />
+        </div>
+
+        <!-- Hidden field for registration date -->
+        <input type="hidden" th:value="${T(java.time.LocalDate).now()}" th:name="${'ddate'}"/>
+
+        <button type="submit">Зарегистрироваться</button>
+    </form>
+
+    <div class="login-link">
+        <p>Уже есть аккаунт? <a th:href="@{/login}">Войти</a></p>
+    </div>
+</div>
+
+<script>
+    function togglePassword() {
+        const passwordInput = document.getElementById('password');
+        if (passwordInput.type === 'password') {
+            passwordInput.type = 'text';
+        } else {
+            passwordInput.type = 'password';
+        }
+    }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Library</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" th:href="@{/css/event_styles.css}">
+</head>
+<body>
+
+<div class="container">
+    <h1 class="mt-4">Об авторе</h1>
+    <div class="row mt-3">
+        <div class="col-md-4"> <!-- Adjusted to add a column for the image -->
+            <!-- Author Image -->
+            <img th:src="@{/images/asd.jpg}" alt="Author Image" class="img-fluid rounded-circle" style="width: 150px; height: auto;"> <!-- Set fixed width -->
+        </div>
+        <div class="col-md-8">
+            <div class="author-info">
+                <p><strong>Автор:</strong> Серегина Анна Андреевна </p>
+                <p>Студентка ПИ22-2. Финансовый университет при правительстве РФ </p>
+                <p><strong>Год:</strong> 2024</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Button to return to the main page -->
+    <a th:href="@{/}" class="btn btn-success mt-3">Вернуться на главную страницу</a>
+
+    <!-- Custom scripts -->
+    <script th:src="@{/js/scripts.js}"></script>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</div>
+
+<style>
+    .author-info {
+        font-size: 1.2em; /* Optional: increase font size for better visibility */
+        margin-top: 20px; /* Add some space above the author info */
+    }
+</style>
+
+</body>
+</html>
